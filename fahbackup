@@ -1,7 +1,8 @@
 #!/bin/bash
-#Back up $HOME/fah to $HOME/fahbackup-data
-#Revision History
-#11-09-12 - Created (DC)
+#
+# fahbackup 0.1
+# Back up $HOME/fah to $HOME/fahbackup-data
+#
 
 if [ -z "$LOGNAME" ]; then
 	echo \$LOGNAME is not set. Cannot run.
