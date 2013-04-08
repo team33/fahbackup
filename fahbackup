@@ -3,13 +3,6 @@
 #Revision History
 #11-09-12 - Created (DC)
 
-#
-# Note: /tmp/fahrestore-"$LOGNAME"-completed must exist for this script
-#       to run; it is normally created by fahrestore script. Said file
-#       should normally be created by user only once: post installation --
-#       to "jumpstart" the backup script
-#
-
 if [ -z "$LOGNAME" ]; then
 	echo \$LOGNAME is not set. Cannot run.
 	exit 1
