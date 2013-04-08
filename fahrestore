@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# fahrestore 0.1
+# Restore $HOME/fah from $HOME/fahbackup-data
+#
 
 if [ -z "$LOGNAME" ]; then
 	echo \$LOGNAME is not set. Cannot run.
