@@ -46,4 +46,4 @@ if [ $RET -ne 0 ]; then
 	tar --strip-components=1 -xf "$(ls -rt ../fahbackup-data/previous/*.tar 2> /dev/null | tail -1)"
 fi
 
-echo completed
+echo done
