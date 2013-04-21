@@ -4,11 +4,10 @@
 # Back up $HOME/fah to $HOME/fahbackup-data
 #
 
-trap "echo Premature exit." EXIT
+trap "echo Premature exit." ERR
 
 if [ -z "$LOGNAME" ]; then
 	echo \$LOGNAME is not set. Cannot run.
-	trap - EXIT
 	exit 1
 fi
 
@@ -16,7 +15,6 @@ eval "cd ~$LOGNAME"
 
 if ! ls fah/* > /dev/null 2>&1 ; then
 	echo "$PWD"/fah empty. Cannot run.
-	trap - EXIT
 	exit 1
 fi
 
@@ -67,7 +65,6 @@ tar -tf fahbackup-data/wip/$date.tar > /dev/null
 RET=$?
 if [ $RET -ne 0 ]; then
 	echo backup failed!
-	trap - EXIT
 	exit 1
 fi
 
@@ -83,4 +80,3 @@ else
 	rm -fr fahbackup-data/current
 fi
 mv fahbackup-data/wip fahbackup-data/current
-trap - EXIT
