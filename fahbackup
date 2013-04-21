@@ -79,7 +79,7 @@ if [ -n "$CURRENT" ]; then
 	rm -fr fahbackup-data/previous
 	#
 	#Move current to previous
-	mv fahbackup-data/current fahbackup-data/previous 2> /dev/null
+	mv fahbackup-data/current fahbackup-data/previous
 else
 	rm -fr fahbackup-data/current
 fi
