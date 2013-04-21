@@ -54,6 +54,8 @@ if [ -n "$file" ]; then
 		echo now-last: $((now-last))
 		echo intv: $((intv))
 	done
+else
+	echo WARNING: checkpoint file not found. Proceeding anyway.
 fi
 
 #
