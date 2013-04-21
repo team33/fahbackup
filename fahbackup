@@ -84,3 +84,4 @@ else
 	rm -fr fahbackup-data/current
 fi
 mv fahbackup-data/wip fahbackup-data/current
+echo done
