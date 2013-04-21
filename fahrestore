@@ -4,11 +4,10 @@
 # Restore $HOME/fah from $HOME/fahbackup-data
 #
 
-trap "echo Premature exit." EXIT
+trap "echo Premature exit." ERR
 
 if [ -z "$LOGNAME" ]; then
 	echo \$LOGNAME is not set. Cannot run.
-	trap - EXIT
 	exit 1
 fi
 
@@ -16,7 +15,6 @@ USE_PREVIOUS=0
 if [ -n "$1" ]; then
 	if [ "$1" != "previous" ]; then
 		echo ERROR: unknown argument -- $1
-		trap - EXIT
 		exit 1
 	fi
 	USE_PREVIOUS=1
@@ -26,13 +24,11 @@ eval "cd ~$LOGNAME"
 
 if ! mount | grep " on $PWD/fah type tmpfs" > /dev/null ; then
 	echo "$PWD"/fah not mounted. Cannot run.
-	trap - EXIT
 	exit 1
 fi
 
 if ls fah/* > /dev/null 2>&1 ; then
 	echo "$PWD"/fah not empty. Cannot run.
-	trap - EXIT
 	exit 1
 fi
 
@@ -52,4 +48,3 @@ if [ $RET -ne 0 ]; then
 fi
 
 echo completed
-trap - EXIT
