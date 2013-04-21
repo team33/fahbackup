@@ -6,18 +6,65 @@
 
 trap "echo Premature exit." ERR
 
-if [ -z "$LOGNAME" ]; then
-	echo \$LOGNAME is not set. Cannot run.
+usage()
+{
+	echo Usage:
+	echo -e \\t$0 [previous]
+	echo -e \\t$0 -V
+	echo -e \\t$0 -h
+}
+
+OPT_CHOICE=
+OPT_VERSION=
+OPT_USAGE=
+
+USE_PREVIOUS=0
+
+while [ -n "$1" ]; do
+	case $1 in
+		(-V)
+			OPT_VERSION=1
+			shift
+			;;
+		(-h)
+			OPT_USAGE=1
+			shift
+			;;
+		(-*)
+			echo ERROR: invalid option -- $1
+			exit 1
+			;;
+		(*)
+			break
+			;;
+	esac
+done
+
+while [ -n "$1" ]; do
+	if [ -n "$OPT_CHOICE" ]; then
+		echo ERROR: excess argument -- $1
+		exit 1
+	fi
+	if [ "$1" != "previous" ]; then
+		echo ERROR: invalid argument -- $1
+		exit 1
+	fi
+	OPT_CHOICE=$1
+	USE_PREVIOUS=1
+	shift
+done
+
+if [ -n "$OPT_VERSION$OPT_USAGE" -a \( "$OPT_VERSION$OPT_USAGE" != "1" -o -n "$OPT_CHOICE" \) ]; then
+	echo ERROR: conflicting arguments
 	exit 1
 fi
 
-USE_PREVIOUS=0
-if [ -n "$1" ]; then
-	if [ "$1" != "previous" ]; then
-		echo ERROR: unknown argument -- $1
-		exit 1
-	fi
-	USE_PREVIOUS=1
+[ -n "$OPT_USAGE" ] && usage && exit 0
+[ -n "$OPT_VERSION" ] && echo fahrestore 0.1 && exit 0
+
+if [ -z "$LOGNAME" ]; then
+	echo \$LOGNAME is not set. Cannot run.
+	exit 1
 fi
 
 eval "cd ~$LOGNAME"

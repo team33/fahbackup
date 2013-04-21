@@ -6,6 +6,49 @@
 
 trap "echo Premature exit." ERR
 
+usage()
+{
+	echo Usage:
+	echo -e \\t$0 -V
+	echo -e \\t$0 -h
+}
+
+OPT_VERSION=
+OPT_USAGE=
+
+while [ -n "$1" ]; do
+	case $1 in
+		(-V)
+			OPT_VERSION=1
+			shift
+			;;
+		(-h)
+			OPT_USAGE=1
+			shift
+			;;
+		(-*)
+			echo ERROR: invalid option -- $1
+			exit 1
+			;;
+		(*)
+			break
+			;;
+	esac
+done
+
+if [ -n "$1" ]; then
+	echo ERROR: excess argument -- $1
+	exit 1
+fi
+
+if [ -n "$OPT_VERSION$OPT_USAGE" -a "$OPT_VERSION$OPT_USAGE" != "1" ]; then
+	echo ERROR: conflicting arguments
+	exit 1
+fi
+
+[ -n "$OPT_USAGE" ] && usage && exit 0
+[ -n "$OPT_VERSION" ] && echo fahbackup 0.1 && exit 0
+
 if [ -z "$LOGNAME" ]; then
 	echo \$LOGNAME is not set. Cannot run.
 	exit 1
