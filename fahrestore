@@ -79,6 +79,11 @@ if ls fah/* > /dev/null 2>&1 ; then
 	exit 1
 fi
 
+exec 3>/tmp/fahbackup.lock-$LOGNAME
+echo -n obtaining the lock...
+flock -x 3
+echo obtained
+
 cd fah
 if [ $USE_PREVIOUS = 0 ]; then
 	echo restoring...

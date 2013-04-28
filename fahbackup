@@ -61,6 +61,11 @@ if ! ls fah/* > /dev/null 2>&1 ; then
 	exit 1
 fi
 
+exec 3>/tmp/fahbackup.lock-$LOGNAME
+echo -n obtaining the lock...
+flock -w 60 -x 3
+echo obtained
+
 rm -fr fahbackup-data/wip
 mkdir -p fahbackup-data/wip
 
