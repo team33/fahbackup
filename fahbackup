@@ -96,7 +96,7 @@ if [ -n "$file" ]; then
 	# wait one minute
 	while [ $((now-last)) -lt $((intv+60)) -a \( $((now-last)) -gt $((intv-60)) -o $((now-last)) -lt 60 \) ]; do
 		echo please wait ...
-		sleep 60
+		sleep 5
 		last=$(stat -c "%Y" $file)
 		now=$(date +%s)
 		echo now-last: $((now-last))
