@@ -95,7 +95,7 @@ if [ -n "$file" ]; then
 	# or if we've just written a checkpoint then
 	# wait one minute
 	while [ $((now-last)) -lt $((intv+60)) -a \( $((now-last)) -gt $((intv-60)) -o $((now-last)) -lt 60 \) ]; do
-		echo sleeping...
+		echo please wait ...
 		sleep 60
 		last=$(stat -c "%Y" $file)
 		now=$(date +%s)
