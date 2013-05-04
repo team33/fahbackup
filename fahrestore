@@ -9,11 +9,12 @@ trap "echo Premature exit." ERR
 usage()
 {
 	echo Usage:
-	echo -e \\t$0 [previous]
+	echo -e \\t$0 [-f] [previous]
 	echo -e \\t$0 -V
 	echo -e \\t$0 -h
 }
 
+OPT_FORCE=
 OPT_CHOICE=
 OPT_VERSION=
 OPT_USAGE=
@@ -22,6 +23,10 @@ USE_PREVIOUS=0
 
 while [ -n "$1" ]; do
 	case $1 in
+		(-f)
+			OPT_FORCE=1
+			shift
+			;;
 		(-V)
 			OPT_VERSION=1
 			shift
@@ -54,7 +59,7 @@ while [ -n "$1" ]; do
 	shift
 done
 
-if [ -n "$OPT_VERSION$OPT_USAGE" -a \( "$OPT_VERSION$OPT_USAGE" != "1" -o -n "$OPT_CHOICE" \) ]; then
+if [ -n "$OPT_VERSION$OPT_USAGE" -a \( "$OPT_VERSION$OPT_USAGE$OPT_FORCE" != "1" -o -n "$OPT_CHOICE" \) ]; then
 	echo ERROR: conflicting arguments
 	exit 1
 fi
@@ -74,8 +79,10 @@ if ! mount | grep " on $PWD/fah type tmpfs" > /dev/null ; then
 	exit 1
 fi
 
+[ -n "$OPT_FORCE" ] && rm -r "$PWD"/fah > /dev/null 2>&1 || true
+
 if ls fah/* > /dev/null 2>&1 ; then
-	echo "$PWD"/fah not empty. Cannot run.
+	echo "$PWD"/fah not empty. Cannot run. Use -f to force removal of "$PWD"/fah
 	exit 1
 fi
 
