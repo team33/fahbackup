@@ -114,7 +114,7 @@ echo backing up...
 # tar may return non-zero exit code if a file is changed mid-run;
 # to accommodate this scenario we test the archive for consistency post-creation
 # 
-tar -cf fahbackup-data/wip/$date.tar fah || true
+tar --exclude='.Trash*' -cf fahbackup-data/wip/$date.tar fah || true
 if ! tar -tf fahbackup-data/wip/$date.tar > /dev/null ; then
 	echo backup failed!
 	exit 1
