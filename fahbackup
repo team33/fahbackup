@@ -49,19 +49,26 @@ fi
 [ -n "$OPT_USAGE" ] && usage && exit 0
 [ -n "$OPT_VERSION" ] && echo fahbackup 1.2 && exit 0
 
-if [ -z "$LOGNAME" ]; then
-	echo \$LOGNAME is not set. Cannot run.
+if [ -z "$LOGNAME" -a -z "$HOME" ]; then
+	echo \$LOGNAME not set. \$HOME not set. Cannot run.
 	exit 1
 fi
 
-eval "cd ~$LOGNAME"
+if [ -n "$LOGNAME" ]; then
+	eval TARGET=~"$LOGNAME"
+else
+	TARGET="$HOME"
+fi
+LOCK=$(echo "$TARGET" | tr / -)
+
+cd "$TARGET"
 
 if ! ls fah/* > /dev/null 2>&1 ; then
 	echo "$PWD"/fah empty. Cannot run.
 	exit 1
 fi
 
-exec 3>/tmp/fahbackup.lock-$LOGNAME
+exec 3>/tmp/fahbackup.lock$LOCK
 echo -n obtaining the lock...
 flock -w 60 -x 3
 echo obtained
