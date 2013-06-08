@@ -1,6 +1,6 @@
 #!/bin/bash -e
 #
-# fahrestore 1.2
+# fahrestore 1.3
 # Restore $HOME/fah from $HOME/fahbackup-data
 #
 
@@ -65,7 +65,7 @@ if [ -n "$OPT_VERSION$OPT_USAGE" -a \( "$OPT_VERSION$OPT_USAGE$OPT_FORCE" != "1"
 fi
 
 [ -n "$OPT_USAGE" ] && usage && exit 0
-[ -n "$OPT_VERSION" ] && echo fahrestore 1.2 && exit 0
+[ -n "$OPT_VERSION" ] && echo fahrestore 1.3 && exit 0
 
 if [ -z "$LOGNAME" -a -z "$HOME" ]; then
 	echo \$LOGNAME not set. \$HOME not set. Cannot run.
