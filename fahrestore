@@ -86,7 +86,7 @@ if ! mount | grep " on $PWD/fah type tmpfs" > /dev/null ; then
 	exit 1
 fi
 
-[ -n "$OPT_FORCE" ] && rm -r "$PWD"/fah > /dev/null 2>&1 || true
+[ -n "$OPT_FORCE" ] && rm -fr "$PWD"/fah > /dev/null 2>&1 || true
 
 if ls fah/* > /dev/null 2>&1 ; then
 	echo "$PWD"/fah not empty. Cannot run. Use -f to force removal of "$PWD"/fah
@@ -108,7 +108,7 @@ fi
 
 if [ $RET -ne 0 ]; then
 	echo restoring previous...
-	rm -r ../fah 2> /dev/null || true
+	rm -fr ../fah 2> /dev/null || true
 	tar --strip-components=1 -xf "$(ls -rt ../fahbackup-data/previous/*.tar 2> /dev/null | tail -1)"
 fi
 
